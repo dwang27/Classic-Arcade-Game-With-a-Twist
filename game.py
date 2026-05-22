@@ -680,7 +680,7 @@ class Game:
 # Main 
 def main():
     pygame.init()
-    screen=pygame.display.set_mode(SCREEN_W,SCREEN_H)
+    screen=pygame.display.set_mode((SCREEN_W,SCREEN_H))
     pygame.display.set_caption("Gacha Tower Defense")
     clock=pygame.time.Clock()
     while True:
