@@ -22,6 +22,7 @@ Adrian Kwok:
 Derek Huang:
 - Designed UI elements (health, currency, waves)
 - Assisted with visuals
+- Added music to the game
 - Set up the GitHub repository (README)
 
 ---
