@@ -89,7 +89,7 @@ TOWER_T = {
 
 # Enemy Types
 ENEMY_T = [
-    {"name":"Normal",   "hp":10,    "spd":1.5, "rew":10,       "sz":15, "wave":1,  "dmg":1, "img":"zombie.png"},
+    {"name":"Normal",   "hp":100,    "spd":1.5, "rew":10,       "sz":15, "wave":1,  "dmg":1, "img":"zombie.png"},
     {"name":"Speedy",   "hp":67,    "spd":3.5, "rew":15,       "sz":10, "wave":2,  "dmg":1, "img":"spider.png"},
     {"name":"Tank",     "hp":500,   "spd":0.67, "rew":25,       "sz":20, "wave":3,  "dmg":2, "img":"warden.png"},
     {"name":"Mini Boss","hp":1000,   "spd":1.1, "rew":50,       "sz":24, "wave":4,  "dmg":3, "img":"wither.png"},
