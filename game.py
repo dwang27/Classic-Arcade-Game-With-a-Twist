@@ -35,7 +35,7 @@ RARITY_COLORS = {
     "Rare":      ( 60, 120, 255),
     "Epic":      (160,  50, 220),
     "Legendary": (255, 160,  30),
-    "Secret":    (255,  50, 100),   # dragon egg — hot pink/red
+    "Secret":    (0,  0, 0),
 }
 BASE_RATES = {"Common":0.50,"Uncommon":0.25,"Rare":0.15,"Epic":0.07,"Legendary":0.03}
 # Secret has a fixed tiny chance added on top — not part of the normalised pool
@@ -84,7 +84,7 @@ TOWER_T = {
     "Netherite Tower": ("Legendary",115, 182, 20, ( 70,  60,  70), 400, "netherite.png"),
 
     # SECRET - dragon egg
-    "Dragon Egg Tower":("Secret",   250, 240, 12, (220,  40,  90), 999, "dragon_egg.png"),
+    "Dragon Egg Tower":("Secret",   250, 240, 12, (0,  0,  0), 999, "dragon_egg.png"),
 }
 
 # Enemy Types
@@ -474,7 +474,7 @@ class Game:
         sec_col=lerp_col((255,50,100),(255,200,50), abs(math.sin(t_val*math.pi)))
         sec_pct=(SECRET_RATE+self.luck*0.001)*100
         self.screen.blit(self.fsm.render(f"{'Secret':<10}{sec_pct:.2f}%",True,sec_col),(px,y)); y+=16
-        self.screen.blit(self.fsm.render("(Dragon Egg)",True,tuple(max(0,c-60) for c in sec_col)),(px+8,y)); y+=14
+        self.screen.blit(self.fsm.render("???",True,tuple(max(0,c-60) for c in sec_col)),(px+8,y)); y+=14
         y+=4
 
         # Inventory
