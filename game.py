@@ -89,12 +89,12 @@ TOWER_T = {
 
 # Enemy Types
 ENEMY_T = [
-    {"name":"Normal",   "hp":80,    "spd":1.5, "rew":10,       "sz":15, "wave":1,  "dmg":1, "img":"zombie.png"},
-    {"name":"Speedy",   "hp":45,    "spd":3.5, "rew":15,       "sz":10, "wave":2,  "dmg":1, "img":"spider.png"},
-    {"name":"Tank",     "hp":320,   "spd":0.67, "rew":25,       "sz":20, "wave":3,  "dmg":2, "img":"warden.png"},
-    {"name":"Mini Boss","hp":700,   "spd":1.1, "rew":50,       "sz":24, "wave":4,  "dmg":3, "img":"wither.png"},
-    {"name":"Boss",     "hp":1800,  "spd":0.7, "rew":120,      "sz":28, "wave":6, "dmg":5, "img":"dragon.png"},
-    {"name":"Final",    "hp":50000, "spd":0.3, "rew":50000000, "sz":50, "wave":10,           "img":"storm.png"},
+    {"name":"Normal",   "hp":10,    "spd":1.5, "rew":10,       "sz":15, "wave":1,  "dmg":1, "img":"zombie.png"},
+    {"name":"Speedy",   "hp":67,    "spd":3.5, "rew":15,       "sz":10, "wave":2,  "dmg":1, "img":"spider.png"},
+    {"name":"Tank",     "hp":500,   "spd":0.67, "rew":25,       "sz":20, "wave":3,  "dmg":2, "img":"warden.png"},
+    {"name":"Mini Boss","hp":1000,   "spd":1.1, "rew":50,       "sz":24, "wave":4,  "dmg":3, "img":"wither.png"},
+    {"name":"Boss",     "hp":3000,  "spd":0.7, "rew":120,      "sz":28, "wave":6, "dmg":5, "img":"dragon.png"},
+    {"name":"Final",    "hp":100000, "spd":0.3, "rew":50000000, "sz":50, "wave":10,           "img":"storm.png"},
 ]
 DIFF = {
     "easy":  {"hp":20,"hp_m":0.80,"rew_m":1.20,"lbl":"EASY",  "col":(0, 255, 0)},
@@ -680,7 +680,7 @@ class Game:
 # Main 
 def main():
     pygame.init()
-    screen=pygame.display.set_mode((SCREEN_W,SCREEN_H), pygame.FULLSCREEN)
+    screen=pygame.display.set_mode((SCREEN_W,SCREEN_H)
     pygame.display.set_caption("Gacha Tower Defense")
     clock=pygame.time.Clock()
     while True:
