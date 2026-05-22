@@ -420,7 +420,7 @@ class Game:
         dc=self.ds["col"]; dl=self.ds["lbl"]
         ds=self.fsm.render(dl,True,dc); self.screen.blit(ds,(px,y)); y+=ds.get_height()+2
 
-        lb("GACHA TOWER DEFENSE",(255, 220, 50),big=True); y+=2
+        lb("GACHA TOWER DEFENSE",(255, 255, 255),big=True); y+=2
 
         bw=292; rat=self.hp/self.max_hp
         pygame.draw.rect(self.screen,(100, 0, 0),(px,y,bw,18))
@@ -540,7 +540,7 @@ class Game:
             pygame.draw.rect(self.screen,(200, 120, 30),(px+154,iy2+118,134,26),border_radius=5)
             self.screen.blit(self.fsm.render(f"[S] Sell +{sv}g",True,BLACK),(px+158,iy2+125))
 
-        self.screen.blit(self.fsm.render("[R]Roll [G]Luck [U]Upg [S]Sell [ESC]Menu",True,(90, 105, 125)),(px,SCREEN_H-18))
+        self.screen.blit(self.fsm.render("[R]Roll[G]Luck[U]Upg[S]Sell [ESC]Menu",True,(90, 105, 125)),(px,SCREEN_H-18))
 
     def draw_over(self):
         ov=pygame.Surface((SCREEN_W,SCREEN_H),pygame.SRCALPHA)
