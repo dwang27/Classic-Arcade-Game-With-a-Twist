@@ -64,27 +64,27 @@ PATH_CELLS = _path_cells()
 # Tower Templates (rarity, dmg, range, fire_rate, color, base cost, img)
 TOWER_T = {
     # Common — dirt & wood
-    "Dirt Tower":      ("Common",    7,  105, 58, (139,  90,  43),  80, "dirt.png"),
+    "Dirt Tower":      ("Common",    5,  105, 60, (139,  90,  43),  80, "dirt.png"),
     "Wood Tower":      ("Common",   10,  110, 55, (170, 130,  70),  80, "wood.png"),
 
     # Uncommon — stone & copper
-    "Stone Tower":     ("Uncommon", 20,  135, 48, (130, 130, 130), 160, "stone.png"),
-    "Copper Tower":    ("Uncommon", 24,  130, 50, (196, 127,  75), 160, "copper.png"),
+    "Stone Tower":     ("Uncommon", 20,  135, 55, (130, 130, 130), 160, "stone.png"),
+    "Copper Tower":    ("Uncommon", 25,  130, 50, (196, 127,  75), 160, "copper.png"),
 
     # Rare — iron & gold
-    "Iron Tower":      ("Rare",     34,  150, 42, (210, 210, 210), 240, "iron.png"),
-    "Gold Tower":      ("Rare",     38,  145, 38, (255, 215,   0), 240, "gold.png"),
+    "Iron Tower":      ("Rare",     35,  150, 40, (210, 210, 210), 240, "iron.png"),
+    "Gold Tower":      ("Rare",     40,  145, 35, (255, 215,   0), 240, "gold.png"),
 
     # Epic — emerald & lapis
-    "Emerald Tower":   ("Epic",     55,  168, 30, ( 20, 200,  80), 320, "emerald.png"),
-    "Lapis Tower":     ("Epic",     58,  155, 32, ( 30,  80, 200), 320, "lapis.png"),
+    "Emerald Tower":   ("Epic",     55,  165, 35, ( 20, 200,  80), 320, "emerald.png"),
+    "Lapis Tower":     ("Epic",     60,  155, 30, ( 30,  80, 200), 320, "lapis.png"),
 
     # Legendary — diamond & netherite
-    "Diamond Tower":   ("Legendary", 88, 198, 25, ( 90, 215, 255), 400, "diamond.png"),
-    "Netherite Tower": ("Legendary",115, 182, 20, ( 70,  60,  70), 400, "netherite.png"),
+    "Diamond Tower":   ("Legendary", 90, 195, 25, ( 90, 215, 255), 400, "diamond.png"),
+    "Netherite Tower": ("Legendary",115, 185, 20, ( 70,  60,  70), 400, "netherite.png"),
 
     # SECRET - dragon egg
-    "Dragon Egg Tower":("Secret",   250, 240, 12, (0,  0,  0), 999, "dragon_egg.png"),
+    "Dragon Egg Tower":("Secret",   250, 250, 25, (0,  0,  0), 999, "dragon_egg.png"),
 }
 
 # Enemy Types
