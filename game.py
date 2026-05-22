@@ -38,12 +38,12 @@ RARITY_COLORS = {
     "Secret":    (0,  0, 0),
 }
 BASE_RATES = {"Common":0.50,"Uncommon":0.25,"Rare":0.15,"Epic":0.07,"Legendary":0.03}
-# Secret has a fixed tiny chance added on top — not part of the normalised pool
+# secret has a fixed chance added on top, not part of the normal rarity
 SECRET_RATE = 0.005   # 0.5% flat, unaffected by luck
 ROLL_COST  = 80
 
 MENU_MUSIC = "textures/C418 - Sweden - Minecraft Volume Alpha.mp3"
-DIFFICULTY_SELECTED_MUSIC = "textures/your_transition_music.mp3"  # Plays when difficulty is selected
+DIFFICULTY_SELECTED_MUSIC = "textures/your_transition_music.mp3"  # plays when difficulty is selected
 GAME_MUSIC = "textures/Time - Hans Zimmer.flac"
 
 # Path
@@ -106,7 +106,6 @@ DIFF = {
 def lerp_col(a,b,t): return tuple(int(a[i]+(b[i]-a[i])*t) for i in range(3))
 
 def gacha_roll(luck=0):
-    # check secret pull first (flat 0.5 %, luck slightly boosts it)
     secret_chance = SECRET_RATE + luck * 0.001
     if random.random() < secret_chance:
         return "Dragon Egg Tower"
@@ -141,7 +140,7 @@ class Tower:
             self.img = pygame.image.load(f"textures/{t[6]}").convert_alpha()
             self.img = pygame.transform.scale(self.img, (32, 32))
         except Exception:
-            # fallback: coloured square if texture missing
+            # coloured square if texture missing
             self.img = pygame.Surface((32, 32), pygame.SRCALPHA)
             self.img.fill((*t[4], 200))
 
@@ -196,7 +195,7 @@ class Tower:
         rc = RARITY_COLORS[self.rarity]
         pygame.draw.rect(surf,rc,(self.px-sz-3,self.py-sz-3,(sz+3)*2,(sz+3)*2),2)
 
-        # rainbow border for secret rarity
+        # special border for secret rarity
         if self.rarity == "Secret":
             t_val = (pygame.time.get_ticks() % 1200) / 1200
             pulse = lerp_col((255,50,100),(255,200,50), abs(math.sin(t_val*math.pi)))
@@ -438,7 +437,7 @@ class Game:
         pygame.draw.rect(self.screen,rc2,(px,y,140,29),border_radius=5)
         self.screen.blit(self.fsm.render(f"[R] Roll {ROLL_COST}g",True,BLACK),(px+5,y+8))
 
-        # Luck Button (greyed out and labelled MAXED at cap)
+        # Luck Button (greyed out and labelled MAXED at max)
         if self.luck >= MAX_LUCK:
             pygame.draw.rect(self.screen,(50,50,50),(px+148,y,148,29),border_radius=5)
             self.screen.blit(self.fsm.render("[G] Luck MAXED",True,(140,140,140)),(px+152,y+8))
@@ -448,7 +447,7 @@ class Game:
             self.screen.blit(self.fsm.render(f"[G] Luck{self.luck+1} {self.luck_cost}g",True,BLACK),(px+152,y+8))
         y+=35
 
-        # Gacha Rates
+        # Rates
         lb("— Rates —",GRAY)
         bonus=self.luck*0.015
         mat_hint={
@@ -469,7 +468,7 @@ class Game:
             hint=self.fsm.render(mat_hint[rar],True,tuple(max(0,c-60) for c in RARITY_COLORS[rar]))
             self.screen.blit(hint,(px+8,y)); y+=14
 
-        # Secret Rate (with special colour effect)
+        # Secret Rate 
         t_val=(pygame.time.get_ticks()%1200)/1200
         sec_col=lerp_col((255,50,100),(255,200,50), abs(math.sin(t_val*math.pi)))
         sec_pct=(SECRET_RATE+self.luck*0.001)*100
@@ -527,7 +526,7 @@ class Game:
             for j,(k,v) in enumerate([("Rarity",t.rarity),("Level",f"{t.level}/{MAX_TOWER_LEVEL}"),("Damage",t.dmg),("Range",f"{t.rng}px"),("Fire rate",f"every {t.rate} ticks")]):
                 self.screen.blit(self.fsm.render(f"{k:<10} {v}",True,WHITE),(px+6,iy2+26+j*18))
 
-            # Upgrade Button (greyed out when at max level)
+            # Upgrade Button (greyed out when at max)
             uc = t.upgrade_cost()
             if uc is None:
                 pygame.draw.rect(self.screen,(50,50,50),(px+6,iy2+118,140,26),border_radius=5)
