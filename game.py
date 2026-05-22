@@ -25,7 +25,7 @@ MAX_WAVES = 10
 SELL_REF  = 0.50   # sell refund fraction
 MAX_TOWER_LEVEL = 5
 MAX_LUCK  = 5
-
+# colors
 WHITE  = (255,255,255);  BLACK  = (0,0,0);     GRAY  = (180,180,180)
 GRASS  = (55,95,50);     PATH_C = (210,180,140); PANEL = (22,28,38)
 
@@ -41,7 +41,7 @@ BASE_RATES = {"Common":0.50,"Uncommon":0.25,"Rare":0.15,"Epic":0.07,"Legendary":
 # secret has a fixed chance added on top, not part of the normal rarity
 SECRET_RATE = 0.005   # 0.5% flat, unaffected by luck
 ROLL_COST  = 80
-
+# game music
 MENU_MUSIC = "textures/C418 - Sweden - Minecraft Volume Alpha.mp3"
 DIFFICULTY_SELECTED_MUSIC = "textures/your_transition_music.mp3"  # plays when difficulty is selected
 GAME_MUSIC = "textures/Time - Hans Zimmer.flac"
@@ -109,7 +109,7 @@ def gacha_roll(luck=0):
     secret_chance = SECRET_RATE + luck * 0.001
     if random.random() < secret_chance:
         return "Dragon Egg Tower"
-
+    
     bonus = luck * 0.015
     r = dict(BASE_RATES)
     r["Common"]    = max(0.05, r["Common"]    - bonus * 3)
@@ -143,7 +143,7 @@ class Tower:
             # coloured square if texture missing
             self.img = pygame.Surface((32, 32), pygame.SRCALPHA)
             self.img.fill((*t[4], 200))
-
+        
         self.gx = gx; self.gy = gy
         self.px = gx*GRID+GRID//2
         self.py = gy*GRID+GRID//2
@@ -155,10 +155,10 @@ class Tower:
         if self.level >= MAX_TOWER_LEVEL:
             return None
         return 60 * self.level
-
+    # sell value
     def sell_val(self):
         return int(self.spent * SELL_REF)
-
+    # upgrade tower
     def upgrade(self):
         if self.level >= MAX_TOWER_LEVEL:
             return
@@ -167,7 +167,7 @@ class Tower:
         self.dmg   = int(self.dmg  * 1.4)
         self.rng   = int(self.rng  * 1.1)
         self.rate  = max(8, int(self.rate * 0.85))
-
+    # tower logic
     def update(self, enemies, projectiles):
         if self.cd   > 0: self.cd   -= 1
         if self.flash> 0: self.flash -= 1
@@ -180,7 +180,7 @@ class Tower:
         if best and self.cd == 0:
             projectiles.append(Projectile(self.px, self.py, best, self.dmg, self.col))
             self.cd = self.rate; self.flash = 6
-
+    # tower drawing
     def draw(self, surf, sel=False):
         sz = GRID//2-4
         if sel:
@@ -190,7 +190,7 @@ class Tower:
             pygame.draw.rect(rs,(255,255,255,80),(0,0,r*2,r*2),1)
             surf.blit(rs,(self.px-r, self.py-r))
             pygame.draw.rect(surf,(255,255,100),(self.px-sz-6,self.py-sz-6,(sz+6)*2,(sz+6)*2),2)
-
+        
         surf.blit(self.img,(self.px-sz, self.py-sz))
         rc = RARITY_COLORS[self.rarity]
         pygame.draw.rect(surf,rc,(self.px-sz-3,self.py-sz-3,(sz+3)*2,(sz+3)*2),2)
@@ -200,7 +200,7 @@ class Tower:
             t_val = (pygame.time.get_ticks() % 1200) / 1200
             pulse = lerp_col((255,50,100),(255,200,50), abs(math.sin(t_val*math.pi)))
             pygame.draw.rect(surf,pulse,(self.px-sz-5,self.py-sz-5,(sz+5)*2,(sz+5)*2),3)
-
+        
         if self.level > 1:
             f  = pygame.font.SysFont("consolas",11,bold=True)
             lb = f.render(f"L{self.level}",True,WHITE)
@@ -386,7 +386,7 @@ class Game:
         self.fmd =pygame.font.SysFont("consolas",15)
         self.fsm =pygame.font.SysFont("consolas",13)
         self.reset()
-
+# reset game
     def reset(self):
         ds=self.ds
         self.towers=[]; self.enemies=[]; self.projs=[]
@@ -408,7 +408,7 @@ class Game:
         pygame.draw.circle(self.screen,(50, 200, 50),PIXEL_PATH[0],10)
         pygame.draw.circle(self.screen,(220, 50, 50),PIXEL_PATH[-1],10)
         pygame.draw.rect(self.screen,PANEL,(SCREEN_W-310,0,310,SCREEN_H))
-
+    # ui
     def draw_ui(self):
         px=SCREEN_W-305; y=8
         def lb(txt,col=WHITE,big=False):
@@ -416,20 +416,20 @@ class Game:
             f=self.flg if big else self.fmd
             s=f.render(txt,True,col)
             self.screen.blit(s,(px,y)); y+=s.get_height()+3
-
+        # difficulty and title
         dc=self.ds["col"]; dl=self.ds["lbl"]
         ds=self.fsm.render(dl,True,dc); self.screen.blit(ds,(px,y)); y+=ds.get_height()+2
-
+        # title
         lb("GACHA TOWER DEFENSE",(255, 255, 255),big=True); y+=2
-
+        # hp bar
         bw=292; rat=self.hp/self.max_hp
         pygame.draw.rect(self.screen,(100, 0, 0),(px,y,bw,18))
         pygame.draw.rect(self.screen,(220, 50, 50),(px,y,int(bw*rat),18))
         self.screen.blit(self.fsm.render(f" 🩷 {self.hp}/{self.max_hp}",True,WHITE),(px+5,y+2))
         y+=24
-
+        # gold and wave info
         lb(f"Gold: {self.gold}")
-        lb(self.spawner.status(),(180,200,255))
+        lb(self.spawner.status(),(180, 200, 255))
         y+=4
 
         # Roll Button
@@ -441,6 +441,7 @@ class Game:
         if self.luck >= MAX_LUCK:
             pygame.draw.rect(self.screen,(50, 50, 50),(px+148,y,148,29),border_radius=5)
             self.screen.blit(self.fsm.render("[G] Luck MAXED",True,(140, 140, 140)),(px+152,y+8))
+        # color changes based on affordability
         else:
             lc=(100, 180, 255) if self.gold>=self.luck_cost else (65, 65, 65)
             pygame.draw.rect(self.screen,lc,(px+148,y,148,29),border_radius=5)
@@ -457,6 +458,7 @@ class Game:
             "Epic":     "(Emerald/Lapis)",
             "Legendary":"(Diamond/Netherite)",
         }
+        # luck upgrade
         for rar,br in BASE_RATES.items():
             if rar in ("Rare","Epic","Legendary"):
                 adj=br+bonus*{"Rare":1.5,"Epic":1.2,"Legendary":0.8}[rar]
@@ -541,7 +543,7 @@ class Game:
             self.screen.blit(self.fsm.render(f"[S] Sell +{sv}g",True,BLACK),(px+158,iy2+125))
 
         self.screen.blit(self.fsm.render("[R]Roll[G]Luck[U]Upg[S]Sell [ESC]Menu",True,(90, 105, 125)),(px,SCREEN_H-18))
-
+    # end game screen
     def draw_over(self):
         ov=pygame.Surface((SCREEN_W,SCREEN_H),pygame.SRCALPHA)
         ov.fill((0, 0, 0, 165)); self.screen.blit(ov,(0, 0))
@@ -551,7 +553,7 @@ class Game:
         s2=self.fmd.render("SPACE = restart   ESC = menu",True,WHITE)
         self.screen.blit(s1,(SCREEN_W//2-s1.get_width()//2,SCREEN_H//2-50))
         self.screen.blit(s2,(SCREEN_W//2-s2.get_width()//2,SCREEN_H//2+20))
-
+    # main draw function
     def draw(self):
         self.draw_map()
         for t in self.towers:
@@ -614,7 +616,7 @@ class Game:
                     # uc is None when already at max level
                     if uc is not None and self.gold>=uc:
                         self.gold-=uc; t.upgrade()
-
+            # sell from either inventory or placed towers
             elif k==pygame.K_s:
                 if self.sel_tow is not None and self.sel_tow<len(self.towers):
                     self.gold+=self.towers[self.sel_tow].sell_val()
@@ -622,7 +624,7 @@ class Game:
                 elif self.sel_inv is not None and self.sel_inv<len(self.inv):
                     self.gold+=int(ROLL_COST*SELL_REF)
                     self.inv.pop(self.sel_inv); self.sel_inv=None
-
+        # mouse input for selecting towers or placing from inventory
         elif ev.type==pygame.MOUSEBUTTONDOWN and ev.button==1:
             mx,my=ev.pos
             if mx<SCREEN_W-310:
@@ -662,7 +664,7 @@ class Game:
         for p in self.projs[:]:
             p.update()
             if not p.alive: self.projs.remove(p)
-
+    # main loop
     def run(self):
         while True:
             res=None
