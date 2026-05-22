@@ -254,14 +254,14 @@ class Projectile:
     def __init__(self,x,y,target,dmg,col):
         self.x=float(x); self.y=float(y); self.target=target
         self.dmg=dmg; self.col=col; self.spd=8.0; self.alive=True
-
+    # projectile logic
     def update(self):
         if not self.target.alive: self.alive=False; return
         dx=self.target.px-self.x; dy=self.target.py-self.y
         dist=math.hypot(dx,dy)
         if dist<self.spd: self.target.hit(self.dmg); self.alive=False
         else: self.x+=dx/dist*self.spd; self.y+=dy/dist*self.spd
-
+    # projectile drawing
     def draw(self,surf):
         pygame.draw.rect(surf,self.col,(int(self.x)-4,int(self.y)-4,8,8))
         pygame.draw.rect(surf,WHITE,   (int(self.x)-2,int(self.y)-2,4,4))
@@ -273,7 +273,7 @@ class Spawner:
         self.wave=0; self.spawned=0; self.queue=[]; self.tick=0
         self.active=False; self.between=True; self.btimer=0
         self.hp_m=hp_m; self.rew_m=rew_m
-
+    
     def _build(self):
         q=[]; n=8+self.wave*3
         avail=[i for i,e in enumerate(ENEMY_T) if self.wave>=e["wave"] and i!=5]
@@ -282,11 +282,11 @@ class Spawner:
         if self.wave==10: q.append(5); n-=1
         for _ in range(max(0,n)): q.append(random.choice(avail))
         random.shuffle(q); return q
-
+    # spawn logic
     def start(self):
         self.wave+=1; self.queue=self._build(); self.spawned=0
         self.active=True; self.between=False; self.tick=0
-
+    
     def update(self,enemies):
         if self.between:
             self.btimer-=1
@@ -299,7 +299,7 @@ class Spawner:
             self.spawned+=1; self.tick=max(18,60-self.wave*2)
         if self.spawned>=len(self.queue) and len(enemies)==0:
             self.active=False; self.between=True; self.btimer=FPS*5
-
+    # status text
     def status(self):
         if self.between:
             s=max(0,self.btimer//FPS)
@@ -323,8 +323,9 @@ class Menu:
             {"k":"hard",  "lbl":"HARD",  "col":(255, 0, 0),
              "desc":["-20% gold earned","+20% enemy HP","10 base health"]},
         ]
+        # music
         self.play_menu_music()
-    
+
     def play_menu_music(self):
         pygame.mixer.music.load(MENU_MUSIC)
         pygame.mixer.music.play(-1)  # -1 makes it loop infinitely
@@ -334,13 +335,13 @@ class Menu:
         pygame.mixer.music.load(GAME_MUSIC)
         pygame.mixer.music.play(-1)  # -1 makes it loop infinitely
         pygame.mixer.music.set_volume(1)
-
+    
     def _rect(self,i):
         cw,ch=250,230; gap=38
         tw=len(self.modes)*cw+(len(self.modes)-1)*gap
         sx=(SCREEN_W-tw)//2
         return sx+i*(cw+gap), SCREEN_H//2-ch//2+50, cw, ch
-
+    # menu input handling
     def handle(self,ev):
         if ev.type==pygame.MOUSEMOTION:
             self.hov=None; mx,my=ev.pos
@@ -354,7 +355,7 @@ class Menu:
                 if rx<=mx<=rx+rw and ry<=my<=ry+rh: self.choice=m["k"]
         if ev.type==pygame.KEYDOWN and ev.key==pygame.K_ESCAPE:
             pygame.quit(); sys.exit()
-
+    # menu drawing
     def draw(self):
         self.screen.fill((16,20,28))
         t=self.fl.render("GACHA TOWER DEFENSE",True,(255, 255, 255))
