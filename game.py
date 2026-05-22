@@ -609,12 +609,12 @@ class Game:
                     self.gold -= self.luck_cost
                     self.luck += 1
                     self.luck_cost = int(self.luck_cost * 1.8)
-
+            # upgrade selected tower
             elif k==pygame.K_u:
                 if self.sel_tow is not None and self.sel_tow<len(self.towers):
                     t=self.towers[self.sel_tow]
                     uc=t.upgrade_cost()
-                    # uc is None when already at max level
+                    # check if upgrade is possible 
                     if uc is not None and self.gold>=uc:
                         self.gold-=uc; t.upgrade()
             # sell from either inventory or placed towers
