@@ -16,9 +16,6 @@ CONTROLS:
 
 import pygame, random, math, sys
 pygame.mixer.init()
-pygame.mixer.music.load("/Users/derekhuang/Gacha_Tower_Defence/Classic-Arcade-Game-With-a-Twist/C418 - Sweden - Minecraft Volume Alpha.mp3")
-pygame.mixer.music.play(-1)  # -1 makes it loop infinitely
-pygame.mixer.music.set_volume(0.5)  # Set volume to 50% (adjust 0.0-1.0 as needed)
 
 # Info
 SCREEN_W, SCREEN_H = 1160, 720
@@ -44,6 +41,10 @@ BASE_RATES = {"Common":0.50,"Uncommon":0.25,"Rare":0.15,"Epic":0.07,"Legendary":
 # Secret has a fixed tiny chance added on top — not part of the normalised pool
 SECRET_RATE = 0.005   # 0.5% flat, unaffected by luck
 ROLL_COST  = 80
+
+MENU_MUSIC = "textures/C418 - Sweden - Minecraft Volume Alpha.mp3"
+DIFFICULTY_SELECTED_MUSIC = "textures/your_transition_music.mp3"  # Plays when difficulty is selected
+GAME_MUSIC = "textures/Time - Hans Zimmer.flac"
 
 # Path
 PATH_WPS = [(0,2),(4,2),(4,6),(8,6),(8,2),(13,2),(13,10),(4,10),(4,13),(19,13)]
@@ -323,6 +324,17 @@ class Menu:
             {"k":"hard",  "lbl":"HARD",  "col":(220,60,60),
              "desc":["-20% gold earned","+20% enemy HP","10 base health"]},
         ]
+        self.play_menu_music()
+    
+    def play_menu_music(self):
+        pygame.mixer.music.load(MENU_MUSIC)
+        pygame.mixer.music.play(-1)  # -1 makes it loop infinitely
+        pygame.mixer.music.set_volume(1)
+    
+    def play_game_music(self):
+        pygame.mixer.music.load(GAME_MUSIC)
+        pygame.mixer.music.play(-1)  # -1 makes it loop infinitely
+        pygame.mixer.music.set_volume(1)
 
     def _rect(self,i):
         cw,ch=250,230; gap=38
@@ -676,6 +688,7 @@ def main():
                 if ev.type==pygame.QUIT: pygame.quit(); sys.exit()
                 menu.handle(ev)
             menu.draw(); clock.tick(FPS)
+        menu.play_game_music()
         game=Game(menu.choice,screen,clock)
         game.run()
 
