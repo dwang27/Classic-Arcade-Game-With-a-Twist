@@ -1,16 +1,16 @@
-# RNG TD (Tower Defense)
+# GACHA TD (Tower Defense)
 A tower defense game with a gacha-style system for obtaining towers.
 
 ## Project Description
 
-This project is a tower defense game that follows the traditional format but adds a gacha-style rolling system. Instead of buying towers directly, players spend in-game currency to roll for random towers with different rarities (Common, Uncommon, Rare, Epic, Legendary). Each tower has unique stats, requiring players to adapt their strategy based on what they receive.
+This project is a tower defense game that follows the traditional format but adds a gacha-style rolling system. Instead of buying towers directly, players spend in-game currency to roll for random towers with different rarities (Common, Uncommon, Rare, Epic, Legendary, Secret). Each tower has unique stats, requiring players to adapt their strategy based on what they receive.
 
 ---
 
 ## Team Members & Roles
 
 Daniel Wang:
-- Designed core game concept
+- Designed game concept
 - Implemented gacha rolling system
 - Helped design tower mechanics
 
@@ -21,8 +21,7 @@ Adrian Kwok:
 
 Derek Huang:
 - Designed UI elements (health, currency, waves)
-- Assisted with visuals
-- Added music to the game
+- Helped with visuals
 - Set up the GitHub repository (README)
 
 ---
@@ -40,7 +39,7 @@ Derek Huang:
 ## Unique Features (Twist)
 
 - Roll for random towers instead of purchasing directly
-- Multiple rarity levels (Common-Legendary)
+- Multiple rarities (Common-Secret)
 - Strategic decisions between saving currency or rolling
 - Upgradable RNG system (better luck)
 
