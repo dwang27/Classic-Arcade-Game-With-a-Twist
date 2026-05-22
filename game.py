@@ -76,12 +76,12 @@ TOWER_T = {
     "Gold Tower":      ("Rare",     40,  145, 35, (255, 215,   0), 240, "gold.png"),
 
     # Epic — emerald & lapis
-    "Emerald Tower":   ("Epic",     55,  165, 35, ( 20, 200,  80), 320, "emerald.png"),
-    "Lapis Tower":     ("Epic",     60,  155, 30, ( 30,  80, 200), 320, "lapis.png"),
+    "Emerald Tower":   ("Epic",     55,  165, 35, (20, 200,  80), 320, "emerald.png"),
+    "Lapis Tower":     ("Epic",     60,  155, 30, (30,  80, 200), 320, "lapis.png"),
 
     # Legendary — diamond & netherite
-    "Diamond Tower":   ("Legendary", 90, 195, 25, ( 90, 215, 255), 400, "diamond.png"),
-    "Netherite Tower": ("Legendary",115, 185, 20, ( 70,  60,  70), 400, "netherite.png"),
+    "Diamond Tower":   ("Legendary", 90, 195, 25, (90, 215, 255), 400, "diamond.png"),
+    "Netherite Tower": ("Legendary",115, 185, 20, (70,  60,  70), 400, "netherite.png"),
 
     # SECRET - dragon egg
     "Dragon Egg Tower":("Secret",   250, 250, 25, (0,  0,  0), 999, "dragon_egg.png"),
@@ -89,17 +89,17 @@ TOWER_T = {
 
 # Enemy Types
 ENEMY_T = [
-    {"name":"Normal",   "hp":80,    "spd":1.6, "rew":10,       "sz":12, "wave":1,  "dmg":1, "img":"zombie.png"},
-    {"name":"Speedy",   "hp":45,    "spd":3.4, "rew":14,       "sz":10, "wave":2,  "dmg":1, "img":"spider.png"},
-    {"name":"Tank",     "hp":320,   "spd":0.9, "rew":25,       "sz":18, "wave":3,  "dmg":2, "img":"warden.png"},
-    {"name":"Mini Boss","hp":700,   "spd":1.1, "rew":50,       "sz":22, "wave":4,  "dmg":3, "img":"wither.png"},
+    {"name":"Normal",   "hp":80,    "spd":1.5, "rew":10,       "sz":15, "wave":1,  "dmg":1, "img":"zombie.png"},
+    {"name":"Speedy",   "hp":45,    "spd":3.5, "rew":15,       "sz":10, "wave":2,  "dmg":1, "img":"spider.png"},
+    {"name":"Tank",     "hp":320,   "spd":0.67, "rew":25,       "sz":20, "wave":3,  "dmg":2, "img":"warden.png"},
+    {"name":"Mini Boss","hp":700,   "spd":1.1, "rew":50,       "sz":24, "wave":4,  "dmg":3, "img":"wither.png"},
     {"name":"Boss",     "hp":1800,  "spd":0.7, "rew":120,      "sz":28, "wave":6, "dmg":5, "img":"dragon.png"},
-    {"name":"Final",    "hp":50000, "spd":0.2, "rew":50000000, "sz":50, "wave":10,           "img":"storm.png"},
+    {"name":"Final",    "hp":50000, "spd":0.3, "rew":50000000, "sz":50, "wave":10,           "img":"storm.png"},
 ]
 DIFF = {
-    "easy":  {"hp":20,"hp_m":0.80,"rew_m":1.20,"lbl":"EASY",  "col":(60,200,80)},
-    "normal":{"hp":15,"hp_m":1.00,"rew_m":1.00,"lbl":"NORMAL","col":(80,140,255)},
-    "hard":  {"hp":10,"hp_m":1.20,"rew_m":0.80,"lbl":"HARD",  "col":(220,60,60)},
+    "easy":  {"hp":20,"hp_m":0.80,"rew_m":1.20,"lbl":"EASY",  "col":(0, 255, 0)},
+    "normal":{"hp":15,"hp_m":1.00,"rew_m":1.00,"lbl":"NORMAL","col":(0, 0, 255)},
+    "hard":  {"hp":10,"hp_m":1.20,"rew_m":0.80,"lbl":"HARD",  "col":(255, 0, 0)},
 }
 
 # Rarity 
@@ -316,11 +316,11 @@ class Menu:
         self.fm=pygame.font.SysFont("consolas",17)
         self.fs=pygame.font.SysFont("consolas",14)
         self.modes=[
-            {"k":"easy",  "lbl":"EASY",  "col":(60,200,80),
+            {"k":"easy",  "lbl":"EASY",  "col":(0, 255, 0),
              "desc":["+20% gold earned","-20% enemy HP","20 base health"]},
-            {"k":"normal","lbl":"NORMAL","col":(80,140,255),
+            {"k":"normal","lbl":"NORMAL","col":(0, 0, 255),
              "desc":["Standard gold","Standard HP","15 base health"]},
-            {"k":"hard",  "lbl":"HARD",  "col":(220,60,60),
+            {"k":"hard",  "lbl":"HARD",  "col":(255, 0, 0),
              "desc":["-20% gold earned","+20% enemy HP","10 base health"]},
         ]
         self.play_menu_music()
@@ -357,21 +357,21 @@ class Menu:
 
     def draw(self):
         self.screen.fill((16,20,28))
-        t=self.fl.render("GACHA TOWER DEFENSE",True,(255,220,50))
+        t=self.fl.render("GACHA TOWER DEFENSE",True,(255, 255, 255))
         self.screen.blit(t,(SCREEN_W//2-t.get_width()//2,70))
-        s=self.fm.render("Choose a difficulty",True,(130,145,170))
+        s=self.fm.render("Choose a difficulty",True,(125, 125, 125))
         self.screen.blit(s,(SCREEN_W//2-s.get_width()//2,118))
         for i,m in enumerate(self.modes):
             rx,ry,rw,rh=self._rect(i)
-            bg=(45,55,78) if self.hov==m["k"] else (30,36,50)
+            bg=(100, 100, 100) if self.hov==m["k"] else (0, 0, 0)
             pygame.draw.rect(self.screen,bg,(rx,ry,rw,rh),border_radius=10)
             pygame.draw.rect(self.screen,m["col"],(rx,ry,rw,rh),2,border_radius=10)
             lb=self.fl.render(m["lbl"],True,m["col"])
             self.screen.blit(lb,(rx+rw//2-lb.get_width()//2,ry+18))
             for j,d in enumerate(m["desc"]):
-                ds=self.fs.render(d,True,(185,195,215))
+                ds=self.fs.render(d,True,(185, 195, 215))
                 self.screen.blit(ds,(rx+rw//2-ds.get_width()//2,ry+100+j*22))
-        h=self.fs.render("ESC to quit",True,(70,85,110))
+        h=self.fs.render("ESC to quit",True,(125, 125, 125))
         self.screen.blit(h,(SCREEN_W//2-h.get_width()//2,SCREEN_H-35))
         pygame.display.flip()
 
@@ -404,9 +404,9 @@ class Game:
         if len(PIXEL_PATH)>1:
             pygame.draw.lines(self.screen,PATH_C,False,PIXEL_PATH,GRID-4)
         for pt in PIXEL_PATH:
-            pygame.draw.circle(self.screen,(200,165,120),pt,GRID//2-2)
-        pygame.draw.circle(self.screen,(50,200,50),PIXEL_PATH[0],10)
-        pygame.draw.circle(self.screen,(220,50,50),PIXEL_PATH[-1],10)
+            pygame.draw.circle(self.screen,(200, 165, 120),pt,GRID//2-2)
+        pygame.draw.circle(self.screen,(50, 200, 50),PIXEL_PATH[0],10)
+        pygame.draw.circle(self.screen,(220, 50, 50),PIXEL_PATH[-1],10)
         pygame.draw.rect(self.screen,PANEL,(SCREEN_W-310,0,310,SCREEN_H))
 
     def draw_ui(self):
@@ -420,12 +420,12 @@ class Game:
         dc=self.ds["col"]; dl=self.ds["lbl"]
         ds=self.fsm.render(dl,True,dc); self.screen.blit(ds,(px,y)); y+=ds.get_height()+2
 
-        lb("GACHA TOWER DEFENSE",(255,220,50),big=True); y+=2
+        lb("GACHA TOWER DEFENSE",(255, 220, 50),big=True); y+=2
 
         bw=292; rat=self.hp/self.max_hp
-        pygame.draw.rect(self.screen,(100,0,0),(px,y,bw,18))
-        pygame.draw.rect(self.screen,(220,50,50),(px,y,int(bw*rat),18))
-        self.screen.blit(self.fsm.render(f"♥ {self.hp}/{self.max_hp}",True,WHITE),(px+5,y+2))
+        pygame.draw.rect(self.screen,(100, 0, 0),(px,y,bw,18))
+        pygame.draw.rect(self.screen,(220, 50, 50),(px,y,int(bw*rat),18))
+        self.screen.blit(self.fsm.render(f" 🩷 {self.hp}/{self.max_hp}",True,WHITE),(px+5,y+2))
         y+=24
 
         lb(f"Gold: {self.gold}")
@@ -433,16 +433,16 @@ class Game:
         y+=4
 
         # Roll Button
-        rc2=(255,200,50) if self.gold>=ROLL_COST else (70,70,70)
+        rc2=(255, 200, 50) if self.gold>=ROLL_COST else (70, 70, 70)
         pygame.draw.rect(self.screen,rc2,(px,y,140,29),border_radius=5)
         self.screen.blit(self.fsm.render(f"[R] Roll {ROLL_COST}g",True,BLACK),(px+5,y+8))
 
         # Luck Button (greyed out and labelled MAXED at max)
         if self.luck >= MAX_LUCK:
-            pygame.draw.rect(self.screen,(50,50,50),(px+148,y,148,29),border_radius=5)
-            self.screen.blit(self.fsm.render("[G] Luck MAXED",True,(140,140,140)),(px+152,y+8))
+            pygame.draw.rect(self.screen,(50, 50, 50),(px+148,y,148,29),border_radius=5)
+            self.screen.blit(self.fsm.render("[G] Luck MAXED",True,(140, 140, 140)),(px+152,y+8))
         else:
-            lc=(100,180,255) if self.gold>=self.luck_cost else (65,65,65)
+            lc=(100, 180, 255) if self.gold>=self.luck_cost else (65, 65, 65)
             pygame.draw.rect(self.screen,lc,(px+148,y,148,29),border_radius=5)
             self.screen.blit(self.fsm.render(f"[G] Luck{self.luck+1} {self.luck_cost}g",True,BLACK),(px+152,y+8))
         y+=35
@@ -470,7 +470,7 @@ class Game:
 
         # Secret Rate 
         t_val=(pygame.time.get_ticks()%1200)/1200
-        sec_col=lerp_col((255,50,100),(255,200,50), abs(math.sin(t_val*math.pi)))
+        sec_col=lerp_col((255, 50, 100),(255, 200, 50), abs(math.sin(t_val*math.pi)))
         sec_pct=(SECRET_RATE+self.luck*0.001)*100
         self.screen.blit(self.fsm.render(f"{'Secret':<10}{sec_pct:.2f}%",True,sec_col),(px,y)); y+=16
         self.screen.blit(self.fsm.render("???",True,tuple(max(0,c-60) for c in sec_col)),(px+8,y)); y+=14
@@ -483,12 +483,12 @@ class Game:
         for i,tn in enumerate(self.inv):
             t=TOWER_T[tn]; rc=RARITY_COLORS[t[0]]
             sel=(i==self.sel_inv)
-            bg=(100,100,160) if sel else (52,58,78)
+            bg=(100, 100, 160) if sel else (52, 58, 78)
             pygame.draw.rect(self.screen,bg,(ix,y,48,48),border_radius=4)
             pygame.draw.rect(self.screen,rc,(ix,y,48,48),2,border_radius=4)
             # extra border for secret
             if t[0]=="Secret":
-                pulse=lerp_col((255,50,100),(255,200,50),abs(math.sin(t_val*math.pi)))
+                pulse=lerp_col((255, 50, 100),(255, 200, 50),abs(math.sin(t_val*math.pi)))
                 pygame.draw.rect(self.screen,pulse,(ix-2,y-2,52,52),2,border_radius=5)
             try:
                 img=pygame.image.load(f"textures/{t[6]}").convert_alpha()
@@ -507,20 +507,20 @@ class Game:
             tn=self.inv[self.sel_inv]; tp=TOWER_T[tn]
             rc=RARITY_COLORS[tp[0]]
             py2=y
-            pygame.draw.rect(self.screen,(35,42,58),(px,py2,295,115),border_radius=6)
+            pygame.draw.rect(self.screen,(35, 42, 58),(px,py2,295,115),border_radius=6)
             pygame.draw.rect(self.screen,rc,(px,py2,295,115),2,border_radius=6)
             self.screen.blit(self.fmd.render(tn,True,rc),(px+6,py2+5))
             for j,(k,v) in enumerate([("Rarity",tp[0]),("Damage",tp[1]),("Range",f"{tp[2]}px"),("Fire rate",f"every {tp[3]} ticks")]):
                 self.screen.blit(self.fsm.render(f"{k:<10} {v}",True,WHITE),(px+6,py2+26+j*18))
             sv=int(ROLL_COST*SELL_REF)
-            self.screen.blit(self.fsm.render(f"[S] Sell for {sv}g",True,(255,165,50)),(px+6,py2+98))
+            self.screen.blit(self.fsm.render(f"[S] Sell for {sv}g",True,(255, 165, 50)),(px+6,py2+98))
             y=py2+122
 
         # Selected placed tower info panel
         if self.sel_tow is not None and self.sel_tow<len(self.towers):
             t=self.towers[self.sel_tow]
             iy2=max(y,SCREEN_H-170)
-            pygame.draw.rect(self.screen,(35,42,58),(px,iy2,295,162),border_radius=6)
+            pygame.draw.rect(self.screen,(35, 42, 58),(px,iy2,295,162),border_radius=6)
             pygame.draw.rect(self.screen,RARITY_COLORS[t.rarity],(px,iy2,295,162),2,border_radius=6)
             self.screen.blit(self.fmd.render(t.name,True,RARITY_COLORS[t.rarity]),(px+6,iy2+5))
             for j,(k,v) in enumerate([("Rarity",t.rarity),("Level",f"{t.level}/{MAX_TOWER_LEVEL}"),("Damage",t.dmg),("Range",f"{t.rng}px"),("Fire rate",f"every {t.rate} ticks")]):
@@ -529,24 +529,24 @@ class Game:
             # Upgrade Button (greyed out when at max)
             uc = t.upgrade_cost()
             if uc is None:
-                pygame.draw.rect(self.screen,(50,50,50),(px+6,iy2+118,140,26),border_radius=5)
-                self.screen.blit(self.fsm.render("[U] MAX LEVEL",True,(140,140,140)),(px+10,iy2+125))
+                pygame.draw.rect(self.screen,(50, 50, 50),(px+6,iy2+118,140,26),border_radius=5)
+                self.screen.blit(self.fsm.render("[U] MAX LEVEL",True,(140, 140, 140)),(px+10,iy2+125))
             else:
-                ubc=(100,220,100) if self.gold>=uc else (75,75,75)
+                ubc=(100, 220, 100) if self.gold>=uc else (75, 75, 75)
                 pygame.draw.rect(self.screen,ubc,(px+6,iy2+118,140,26),border_radius=5)
                 self.screen.blit(self.fsm.render(f"[U] Upgrade {uc}g",True,BLACK),(px+10,iy2+125))
 
             sv=t.sell_val()
-            pygame.draw.rect(self.screen,(200,120,30),(px+154,iy2+118,134,26),border_radius=5)
+            pygame.draw.rect(self.screen,(200, 120, 30),(px+154,iy2+118,134,26),border_radius=5)
             self.screen.blit(self.fsm.render(f"[S] Sell +{sv}g",True,BLACK),(px+158,iy2+125))
 
-        self.screen.blit(self.fsm.render("[R]Roll [G]Luck [U]Upg [S]Sell [ESC]Menu",True,(90,105,125)),(px,SCREEN_H-18))
+        self.screen.blit(self.fsm.render("[R]Roll [G]Luck [U]Upg [S]Sell [ESC]Menu",True,(90, 105, 125)),(px,SCREEN_H-18))
 
     def draw_over(self):
         ov=pygame.Surface((SCREEN_W,SCREEN_H),pygame.SRCALPHA)
-        ov.fill((0,0,0,165)); self.screen.blit(ov,(0,0))
+        ov.fill((0, 0, 0, 165)); self.screen.blit(ov,(0, 0))
         msg="GAME OVER" if self.over else "VICTORY!"
-        col=(220,60,60) if self.over else (255,220,50)
+        col=(220, 60, 60) if self.over else (255, 220, 50)
         s1=self.fbig.render(msg,True,col)
         s2=self.fmd.render("SPACE = restart   ESC = menu",True,WHITE)
         self.screen.blit(s1,(SCREEN_W//2-s1.get_width()//2,SCREEN_H//2-50))
@@ -567,7 +567,7 @@ class Game:
             if mx<SCREEN_W-310:
                 gx,gy=mx//GRID,my//GRID
                 valid=(gx,gy) not in PATH_CELLS and not any(t.gx==gx and t.gy==gy for t in self.towers)
-                gc=(100,255,100,90) if valid else (255,80,80,90)
+                gc=(100, 255, 100, 90) if valid else (255, 80, 80, 90)
                 gh=pygame.Surface((GRID,GRID),pygame.SRCALPHA); gh.fill(gc)
                 self.screen.blit(gh,(gx*GRID,gy*GRID))
                 tn=self.inv[self.sel_inv]; tp=TOWER_T[tn]
